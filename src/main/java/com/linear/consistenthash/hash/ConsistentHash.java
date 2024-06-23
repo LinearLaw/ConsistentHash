@@ -44,7 +44,7 @@ public class ConsistentHash {
             // 重新做哈希运算，计算原本该节点的数据需要迁移到哪个节点
             String newDataNode = getNearestNode(key);
             // 实际操作：将dataEntry.getKey()对应的数据迁移到newDataNode
-            System.out.println("Migrating data from " + node + " to " + newDataNode);
+            System.out.println("[Migrate]key = " + key + ",  Migrating data from " + node + " to " + newDataNode);
         }
     }
 
@@ -86,6 +86,7 @@ public class ConsistentHash {
 
     public static void main(String[] args) {
         ConsistentHash consistentHash = new ConsistentHash();
+        // 3个节点，每一个节点都存在50个虚拟节点，一共150个
         consistentHash.add("nodeA");
         consistentHash.add("nodeB");
         consistentHash.add("nodeC");
@@ -93,6 +94,7 @@ public class ConsistentHash {
         calcTargetNode(consistentHash, "1");
         calcTargetNode(consistentHash, "2");
 
+        // 移除一个节点，此时虚拟节点个数降低到100个
         consistentHash.remove("nodeC");
         System.out.println("---- nodeC remove ----");
         calcTargetNode(consistentHash, "3");
